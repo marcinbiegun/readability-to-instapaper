@@ -9,3 +9,7 @@ Clone the repo, install gems, put your data in the config file and run the scrip
     bundle install
     vim config.yml
     ruby import.rb
+
+## Development state
+
+The script works fine, but is kinda slow.
