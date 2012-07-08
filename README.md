@@ -4,12 +4,8 @@ This is a simple script importing all your bookmarked articles from **readabilit
 
 ## Usage
 
-Clone the repo, install gems, put your data in the config file and run the script:
-
-    bundle install
-    vim config.yml
-    ruby import.rb
+Clone the repo, install the gems, and run the `import.rb` script.
 
 ## Development state
 
-The script works fine, but is kinda slow.
+The script works fine, but is kinda slow (2 HTTP requestes for every imported link).
