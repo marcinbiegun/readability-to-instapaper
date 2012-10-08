@@ -1,11 +1,17 @@
-# Readability to Instapaper importer
+# Readability to Instapaper
 
-This is a simple script importing all your bookmarked articles from **readability.com** to **instapaper.com**.
+A simple script for importing all your bookmarked articles from **readability.com** to **instapaper.com**.
 
 ## Usage
 
-Clone the repo, install the gems, and run the `import.rb` script.
+Clone the repo, install the bundled gems, run the script, it will prompt for
+your credentials.
+
+```bash
+bundle install
+ruby import.rb
+```
 
 ## Development state
 
-The script works fine, but is kinda slow (2 HTTP requestes for every imported link).
+The script works fine, but is kinda slow (2 HTTP requestes per imported link).
