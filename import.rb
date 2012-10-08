@@ -5,8 +5,6 @@ require "bundler/setup"
 
 require "mechanize"
 require "json"
-#require "pry"
-require "yaml"
 
 readability_data = {}
 config = {}
@@ -22,7 +20,7 @@ puts "Enter you Instapaper password: "
 config[:instapaper_password] = gets.chomp
 
 begin
-  puts "Readability: signing in"
+  puts "\nReadability: signing in"
   http.get('https://www.readability.com/readers/login/') do |login_page|
     login_page.form_with(:action => 'https://www.readability.com/readers/login/') do |form|
       form.username = config[:readability_username]
@@ -41,7 +39,7 @@ end
 
 http.get('http://www.instapaper.com/user/login') do |login_page|
   begin
-    puts "Instapaper: signing in"
+    puts "\nInstapaper: signing in"
     login_page.form_with(:action => '/user/login') do |form|
       form.username = config[:instapaper_email]
       form.password = config[:instapaper_password]
@@ -54,7 +52,7 @@ http.get('http://www.instapaper.com/user/login') do |login_page|
         add_page.form_with(:action => '/edit') do |form|
           form["bookmark[url]"] = readability_article["article__url"]
         end.click_button
-        puts "Instapaper: exported article #{i}/#{readability_data.size}"
+        puts "Instapaper: imported article #{i}/#{readability_data.size}"
       end
     end
 
@@ -65,4 +63,4 @@ http.get('http://www.instapaper.com/user/login') do |login_page|
   end
 end
 
-puts "Done!"
+puts "\nDone!"
