@@ -5,15 +5,15 @@ require "bundler/setup"
 
 require "mechanize"
 require "json"
-require "pry"
+#require "pry"
 require "yaml"
 
 readability_data = {}
 config = {}
 http = Mechanize.new
 
-puts "Enter you Readability email: "
-config[:readability_email] = gets.chomp
+puts "Enter you Readability username: "
+config[:readability_username] = gets.chomp
 puts "Enter you Readability password: "
 config[:readability_password] = gets.chomp
 puts "Enter you Instapaper email: "
@@ -23,16 +23,16 @@ config[:instapaper_password] = gets.chomp
 
 begin
   puts "Readability: signing in"
-  http.get('http://readability.com') do |login_page|
-    # Sign in
+  http.get('https://www.readability.com/readers/login/') do |login_page|
+
     login_page.form_with(:action => 'https://www.readability.com/readers/login/') do |form|
-      form.username = config[:readability_email]
+      form.username = config[:readability_username]
       form.password = config[:readability_password]
     end.click_button
 
     # Download data
     puts "Readability: downloading data"
-    readability_data = JSON.parse(http.get('http://www.readability.com/n23/export/json/').content)
+    readability_data = JSON.parse(http.get("http://www.readability.com/#{config[:readability_username]}/export/json/").content)
     puts "Readability: downloaded #{readability_data.size} articles"
   end
 rescue => e
@@ -41,11 +41,8 @@ rescue => e
   exit
 end
 
-
-
 http.get('http://www.instapaper.com/user/login') do |login_page|
   begin
-    # Sign in
     puts "Instapaper: signing in"
     login_page.form_with(:action => '/user/login') do |form|
       form.username = config[:instapaper_email]
