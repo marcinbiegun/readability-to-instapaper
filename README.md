@@ -1,6 +1,6 @@
 # Readability to Instapaper
 
-A simple script for importing all your bookmarked articles from **readability.com** to **instapaper.com**.
+A simple script for exportingj all your bookmarked articles from **readability.com** to **instapaper.com**.
 
 ## Usage
 
