@@ -24,20 +24,18 @@ config[:instapaper_password] = gets.chomp
 begin
   puts "Readability: signing in"
   http.get('https://www.readability.com/readers/login/') do |login_page|
-
     login_page.form_with(:action => 'https://www.readability.com/readers/login/') do |form|
       form.username = config[:readability_username]
       form.password = config[:readability_password]
     end.click_button
 
-    # Download data
     puts "Readability: downloading data"
     readability_data = JSON.parse(http.get("http://www.readability.com/#{config[:readability_username]}/export/json/").content)
     puts "Readability: downloaded #{readability_data.size} articles"
   end
 rescue => e
   puts "Readability: ERROR - #{e}"
-  puts "Readability: ERROR - check if data in the config file is correct"
+  puts "Readability: ERROR - check if your credentails are correct"
   exit
 end
 
@@ -49,7 +47,6 @@ http.get('http://www.instapaper.com/user/login') do |login_page|
       form.password = config[:instapaper_password]
     end.click_button
 
-    # Add articles
     i = 0
     readability_data.reverse.each do |readability_article|
       i += 1
@@ -57,15 +54,15 @@ http.get('http://www.instapaper.com/user/login') do |login_page|
         add_page.form_with(:action => '/edit') do |form|
           form["bookmark[url]"] = readability_article["article__url"]
         end.click_button
-        puts "Instapaper: added article #{i}/#{readability_data.size}"
+        puts "Instapaper: exported article #{i}/#{readability_data.size}"
       end
-    end # readability_data
+    end
 
   rescue => e
     puts "Instapaper: ERROR - #{e}"
-    puts "Instapaper: ERROR - check if data in the config file is correct"
+    puts "Readability: ERROR - check if your credentails are correct"
     exit
   end
-end # get login_page
+end
 
 puts "Done!"
